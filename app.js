@@ -12,7 +12,7 @@ const tweets = []
 function tweetMiddleware(request, response, next){
     const {user_id} = request.params
     if(user_id ){
-        
+        return response.status(401).json({error: 'User not found'})
     }
 }
 
@@ -21,7 +21,7 @@ routes.get('/tweets/list', (request, response) =>{
 })
 
 routes.post('tweets/create', (reuest, response)=>{
-    const { content, user_id } = request.body
+    const { content} = request.body
 
     const tweet = {id: uuid(), content, user_id: uuid()}
 
