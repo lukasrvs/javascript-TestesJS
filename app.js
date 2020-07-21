@@ -11,7 +11,9 @@ const tweets = []
 
 function tweetMiddleware(request, response, next){
     const {user_id} = request.params
-    if(user_id ){
+
+    const userIndex = tweets.findIndex(t => t.user_id == user_id)
+    if(userIndex < 0){
         return response.status(401).json({error: 'User not found'})
     }
 }
@@ -30,7 +32,7 @@ routes.post('tweets/create', (reuest, response)=>{
     return response.json(tweet)
 })
 
-routes.put('tweets/update/:id', (request, response)=>{
+routes.put('tweets/update/:id', tweetMiddleware,(request, response)=>{
     const { id } = request.params
     const { content } = request.body
 
